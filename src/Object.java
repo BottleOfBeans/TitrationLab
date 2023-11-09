@@ -75,8 +75,8 @@ public class Object {
         /*
          * Hitbox debugging code
          */
-        //graphics.setColor(Color.BLUE);
-        //graphics.fill(interactableBox);
+        graphics.setColor(Color.BLUE);
+        graphics.fill(interactableBox);
 
         //g.drawImage(image, [starting x], [starting y], [image width], [image height], [image observer]);
         graphics.drawImage(img, (int)interactableBox.getMinX(), (int)interactableBox.getMinY(), (int)interactableBox.getWidth(), (int)interactableBox.getWidth(), null);
@@ -84,8 +84,8 @@ public class Object {
         /*
          * Center point debugging code
          */
-        //graphics.setColor(Color.RED);
-        //graphics.fill(centerEllipse());
+        graphics.setColor(Color.RED);
+        graphics.fill(centerEllipse());
     }
 
 

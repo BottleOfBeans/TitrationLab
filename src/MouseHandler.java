@@ -11,6 +11,9 @@ public class MouseHandler implements MouseListener{
    private static Vector2 mouseVector = new Vector2(mouseX,mouseY);
    private static Object selected;
    private static boolean instructionsOpen = false;
+   private static boolean redButtonHeld = false;
+   private static boolean greenButtonHeld = false;
+
 
    @Override
    public void mouseClicked(MouseEvent e) {
@@ -36,25 +39,29 @@ public class MouseHandler implements MouseListener{
       
       Point p = new Point(e.getX(), e.getY());
       ControlPanel cp = GameWindow.controlPanel;
-      Rectangle2D dripButtonBox = new Rectangle2D.Double(cp.dripButtonPos.x, cp.dripButtonPos.y, cp.dripButtonRadius, cp.dripButtonRadius);
-      if(dripButtonBox.contains(p)){
-         cp.dripButtonClicked = true;
-      }
-      else {cp.dripButtonClicked = false;}
-
-      Rectangle2D resetButtonBox = new Rectangle2D.Double(cp.resetButtonPos.x, cp.resetButtonPos.y, cp.resetButtonRadius, cp.resetButtonRadius);
-      if(resetButtonBox.contains(p)){
-         cp.resetButtonClicked = true;
-      }
-      else {cp.resetButtonClicked = false;}
       
-      
+      //Green Button
+      if(cp.dripButtonBox.contains(p)){
+         redButtonHeld = true;
+      }
 
+      // Red button
+      if(cp.resetButtonBox.contains(p)){
+         greenButtonHeld = true;
+      }
    }
 
    @Override
-   public void mouseReleased(MouseEvent e) {
-      this.selected = null;
+   public void mouseReleased(MouseEvent e) {      
+      if(redButtonHeld){
+         redButtonHeld = false;
+      }
+      if(greenButtonHeld){
+         greenButtonHeld = false;
+      }
+      if(this.selected != null){
+         this.selected = null;
+      }
    }
 
    @Override
@@ -80,6 +87,12 @@ public class MouseHandler implements MouseListener{
    }
    public static boolean getInstructionsOpen(){
       return instructionsOpen;
+   }
+   public static boolean getRedStatus(){
+      return redButtonHeld;
+   }
+   public static boolean getGreenStatus(){
+      return greenButtonHeld;
    }
 
 }

@@ -145,7 +145,7 @@ public class GameWindow extends JPanel implements Runnable {
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         //Drawing the background
-        background.drawTextures(graphics);
+        //background.drawTextures(graphics);
         
         //Drawing the textures
         cup.drawTextures(graphics);
