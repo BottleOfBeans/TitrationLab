@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
@@ -18,6 +19,10 @@ public class ControlPanel {
     Rectangle2D dripButtonBox = new Rectangle2D.Double(dripButtonPos.x, dripButtonPos.y, dripButtonRadius, dripButtonRadius);
     Rectangle2D resetButtonBox = new Rectangle2D.Double(resetButtonPos.x, resetButtonPos.y, resetButtonRadius, resetButtonRadius);
 
+    // Lower Panel
+    Vector2 lowerPanelPos = new Vector2(0,0);
+    int molarityButtonSize = 4; // panelSize.
+
 
     String text = "Press the stop button (below) when you want the titration to begin/end";
 
@@ -30,13 +35,15 @@ public class ControlPanel {
 
     public void updateDimensions(){
         dripButtonPos.x = panelPos.x + panelSize.x/3 - dripButtonRadius/2;
-        dripButtonPos.y = panelPos.y + panelSize.y/2 - (dripButtonRadius*3)/4;
+        dripButtonPos.y = panelPos.y + (panelSize.y*2)/3 - (dripButtonRadius*3)/4;
 
         resetButtonPos.x = panelPos.x + (panelSize.x*2)/3 - resetButtonRadius/2;
-        resetButtonPos.y = panelPos.y + panelSize.y/2 - (resetButtonRadius*3)/4;
+        resetButtonPos.y = panelPos.y + (panelSize.y*2)/3 - (resetButtonRadius*3)/4;
 
         dripButtonBox = new Rectangle2D.Double(dripButtonPos.x, dripButtonPos.y, dripButtonRadius, dripButtonRadius);
         resetButtonBox = new Rectangle2D.Double(resetButtonPos.x, resetButtonPos.y, resetButtonRadius, resetButtonRadius);
+
+        lowerPanelPos = new Vector2(panelPos.x, (int)panelPos.y + panelSize.y + 10);
     }
 
     public void draw(Graphics2D graphics){
@@ -45,9 +52,9 @@ public class ControlPanel {
 
         // background
         g.setColor(Color.LIGHT_GRAY);
-        g.fillRect((int)panelPos.x, (int)panelPos.y, (int)panelSize.x, (int)panelSize.y);
+        g.fillRect((int)panelPos.x - 10, (int)panelPos.y - 10, (int)panelSize.x + 10, (int)panelSize.y + 10);
         g.setColor(Color.GRAY);
-        g.fillRect((int)panelPos.x + 10, (int)panelPos.y + 10, (int)panelSize.x, (int)panelSize.y);
+        g.fillRect((int)panelPos.x, (int)panelPos.y, (int)panelSize.x , (int)panelSize.y );
 
 
         // buttons
@@ -66,5 +73,17 @@ public class ControlPanel {
         g.fillOval((int)resetButtonPos.x-5, (int)resetButtonPos.y+5, (int)resetButtonRadius, (int)resetButtonRadius); //shadow
         g.setColor(Color.GREEN);
         g.fillOval((int)(resetButtonPos.x-resetButtonOffset), (int)(resetButtonPos.y+resetButtonOffset), (int)resetButtonRadius, (int)resetButtonRadius);
+    
+        // text
+        label = "Volume Dripped: " + volumeDripped + " mL";
+        g.setColor(Color.BLACK);
+        Font myFont = new Font ("Courier New", 1, 25);
+        g.setFont (myFont);
+        g.drawString(label, (int)panelPos.x, (int)(panelPos.y+panelSize.y/10));
+
+
+        // Part 2
+        g.setColor(Color.GRAY);
+        //g.fillRect((int)panelPos.x, (int)panelPos.y + panelSize.y + panelSize.y/10, (int)panelSize.x , (int)panelSize.y );
     }
 }

@@ -1,9 +1,12 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -37,7 +40,7 @@ public class GameWindow extends JPanel implements Runnable {
 
 
     //background
-    static Object background = new Object(new Vector2(950,-200), new Vector2(1800, 1080), false, "src/images/background.png");
+    static Image img = Toolkit.getDefaultToolkit().createImage("src/images/background.png");
 
     // Instruction panel related objecst
     static Object instructionsButton = new Object(new Vector2(100,100), new Vector2(100, 100), true, "src/images/clipboard.png");
@@ -146,7 +149,8 @@ public class GameWindow extends JPanel implements Runnable {
 
         //Drawing the background
         //background.drawTextures(graphics);
-        
+        graphics.drawImage(img,0,0,1920,1080, null);
+
         //Drawing the textures
         cup.drawTextures(graphics);
         
