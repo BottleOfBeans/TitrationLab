@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.geom.*;
 import java.awt.image.BufferedImage;
@@ -40,7 +41,9 @@ public class Object {
      * 
      */
 
-    final Vector2 GRAVITY = new Vector2(0,2);
+    final Vector2 GRAVITY = new Vector2(0,0.3);
+    final double GRAVITYHEIGHT = 900;
+
     private boolean draggable; // If true then can move by dragging
     private Rectangle2D interactableBox; // Hitbox
     private Vector2 currentPos; // current postiion
@@ -79,7 +82,7 @@ public class Object {
         //graphics.fill(interactableBox);
 
         //g.drawImage(image, [starting x], [starting y], [image width], [image height], [image observer]);
-        graphics.drawImage(img, (int)interactableBox.getMinX(), (int)interactableBox.getMinY(), (int)interactableBox.getWidth(), (int)interactableBox.getWidth(), null);
+        graphics.drawImage(img, (int)interactableBox.getMinX(), (int)interactableBox.getMinY(), (int)interactableBox.getWidth(), (int)interactableBox.getHeight(), null);
         
         /*
          * Center point debugging code
@@ -99,15 +102,16 @@ public class Object {
     }
 
     public void gravityHandler(double deltaTime){
-        if(this.currentPos.y < 730){
+        if(this.currentPos.y + this.interactableBox.getHeight()/2 < GRAVITYHEIGHT){ //The number value here is the table height where top is 0 and bottom is GameWindow.gameHeight
             Vector2 velocity = this.currentPos.returnSubtract(this.prevPos);
             velocity.addVector(GRAVITY.returnMultiply(deltaTime));
             this.prevPos = this.currentPos;
             Vector2 temp =  this.currentPos.returnAddition(velocity);
             if(temp.x > GameWindow.gameWidth){temp.x = GameWindow.gameWidth;} //Right wall boundary
-            if(temp.y > GameWindow.gameHeight ){temp.y = GameWindow.gameHeight;} // Bottom wall boundary
+            if(temp.y > GameWindow.gameHeight ){temp.y = GRAVITYHEIGHT;} // Bottom wall boundary
             if(temp.y < 0){temp.y = 0;} //Top wall boundary
             if(temp.x < 0){temp.x = 0;} //Left wall boundary
+            if(this == GameWindow.burrette &&  GameWindow.ringStand.getInteractableBox().contains(new Point2D.Double(this.currentPos.x, this.currentPos.y))){return;};
             this.currentPos = temp;
         }
     }

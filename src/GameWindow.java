@@ -32,8 +32,11 @@ public class GameWindow extends JPanel implements Runnable {
     MouseListener mouseH = new MouseHandler();
 
     // static Object e = new Object([position as Vector2], [dimensions as Vector2], draggability, imageUrl)
-    static Object cup = new Object(new Vector2(gameWidth/2,gameHeight/2), new Vector2(100, 100), true, "src/images/cup.png");
-    
+    static Object cup = new Object(new Vector2(gameWidth/2 - 400,gameHeight/5), new Vector2(100, 100), true, "src/images/cup.png");
+    static Object burrette = new Object(new Vector2(gameWidth/2 + 600,gameHeight/5), new Vector2(200, 430), true, "src/images/burrette.png");
+    static Object ringStand = new Object(new Vector2(gameWidth/2 ,30), new Vector2(800, 800), false, "src/images/ringstand.png");
+    static Object beaker = new Object(new Vector2(gameWidth/2 - 600,gameHeight/5), new Vector2(300, 300), true, "src/images/beaker.png");
+
     /*
      * Instructions initilizers
      */
@@ -47,12 +50,20 @@ public class GameWindow extends JPanel implements Runnable {
     static Object instructionsScreen = new Object(new Vector2(gameWidth/2,gameHeight/2), new Vector2(900, 900), true, "src/images/instructions.png");
     static Object closeButton = new Object(new Vector2(gameWidth/2 + 400 ,gameHeight/2 - 375), new Vector2(50, 50), false, "src/images/closebutton.png");
     
+    /*
+     * Assembly Checks
+     */
+    static boolean buretteConnected = false;
+    static boolean beakerConnected = false;
 
-    static Object objs[] = {cup};
+
+    static Object objs[] = {burrette, beaker, ringStand};
 
     // control panel object
     //Position, Size (Both Vector2)
-    static ControlPanel controlPanel = new ControlPanel(new Vector2(gameWidth-300,100), new Vector2(200,200));
+    static ControlPanel controlPanel = new ControlPanel(new Vector2(gameWidth-300,100), new Vector2(300,200));
+
+    static TitrationManager tM = new TitrationManager();
 
     /*
      * These do not have proper image files associated yet so they throw up errors!
@@ -135,6 +146,12 @@ public class GameWindow extends JPanel implements Runnable {
         if(MouseHandler.getSelected() != null){
             MouseHandler.getSelected().setCurrentPos(MouseHandler.getMouseVector());
         }
+
+        if(ringStand.getInteractableBox().contains(burrette.getInteractableBox())){buretteConnected = true;}
+        if(ringStand.getInteractableBox().contains(beaker.getInteractableBox())){beakerConnected = true;}
+
+
+        tM.update();
     }
 
     /*
@@ -151,9 +168,14 @@ public class GameWindow extends JPanel implements Runnable {
         //background.drawTextures(graphics);
         graphics.drawImage(img,0,0,1920,1080, null);
 
+        //Drawing the liquids
+        tM.drawBurretteLiquid(graphics);
+        tM.drawBeakerLiquid(graphics);
+
         //Drawing the textures
-        cup.drawTextures(graphics);
-        
+        for(Object o : objs){
+            o.drawTextures(graphics);
+        }        
         
         // Drawing the ControlPanel
         controlPanel.draw(graphics);

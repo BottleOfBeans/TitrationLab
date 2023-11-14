@@ -21,7 +21,7 @@ public class ControlPanel {
 
     // Lower Panel
     Vector2 lowerPanelPos = new Vector2(0,0);
-    int molarityButtonSize = 4; // panelSize.
+    int molarityButtonSize = 4; // panelSize.x
 
 
     String text = "Press the stop button (below) when you want the titration to begin/end";

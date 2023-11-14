@@ -43,11 +43,15 @@ public class MouseHandler implements MouseListener{
       //Green Button
       if(cp.dripButtonBox.contains(p)){
          redButtonHeld = true;
+         //if (GameWindow.tM.)
+         GameWindow.tM.drip();
       }
 
       // Red button
       if(cp.resetButtonBox.contains(p)){
          greenButtonHeld = true;
+         GameWindow.tM.reset();
+         cp.volumeDripped = 0;
       }
    }
 
