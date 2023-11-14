@@ -182,6 +182,8 @@ public class GameWindow extends JPanel implements Runnable {
 
         //Drawing the instruction panel
         instructionHandler(graphics);
+
+        tM.calcs(graphics);
     }
 
 }
